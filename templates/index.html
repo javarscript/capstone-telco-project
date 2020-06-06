@@ -78,7 +78,7 @@
 					</button>
 					<button class="tablinks" onclick="openTab(event, 'subscription')">Subscription Service
 					</button>
-					<button class="tablinks" onclick="openTab(event, 'Own')">(Create-Your-Own)
+					<button class="tablinks" onclick="openTab(event, 'Own')">Top 10 churn city
 					</button>
 				</div>
 			</div>
@@ -114,6 +114,14 @@
 
 				<div id="Own" class="tabcontent">
 				  <!-- Define your own analysis -->
+				  <br>
+				  <h3 style="color: #333333;text-align:center">Top 10 churn city</h3>
+				  <div class="img-container">					  
+					  {% if funded_plot != None %}
+					<img src="data:image/png;base64,{{ plot_top_ten_res }}" style="width:50%;">
+					  {% endif %}  
+
+				  </div>
 				</div>
 
 			</div>

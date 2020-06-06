@@ -163,3 +163,34 @@ def plot_tenure_cltv(data):
     result = str(figdata_png)[2:-1]
 
     return(result)
+
+
+def plot_top_ten(data):
+
+    # ---- Average Lifetime Value by Tenure
+    top10 = data.groupby('city').churn_label.count().sort_values(ascending=False).head(10).index.to_list()
+
+    top10_data = data[data['city'].isin(top10)]
+
+    _df = pd.crosstab(
+        index=top10_data['city'],
+        columns=top10_data['churn_label'],
+        normalize='index'
+    )*100
+
+    axTop = _df.plot(kind = 'barh', color=['#53a4b1','#c34454'], figsize = (10,6))
+
+
+    axTop.xaxis.set_major_formatter(mtick.PercentFormatter())
+    plt.legend(['Retain', 'Churn'], fancybox=True,shadow=True, bbox_to_anchor=(1, 1))
+    plt.axes().get_yaxis().set_label_text('City')
+    plt.title('Top 10 churn city')
+
+    # Save png file to IO buffer
+    figfile = BytesIO()
+    plt.savefig(figfile, format='png')
+    figfile.seek(0)
+    figdata_png = base64.b64encode(figfile.getvalue())
+    result = str(figdata_png)[2:-1]
+
+    return(result)
